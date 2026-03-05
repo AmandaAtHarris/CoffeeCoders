@@ -40,6 +40,7 @@ school_loc = gpd.read_file(os.path.join(DATA,'Public_School_Locations_2021-22.ge
 df = pd.read_csv(os.path.join(DATA,'final_merged.csv'))
 ```
 
+
 ```{python}
 #| echo: false
 cook_3857 = cook.to_crs(epsg=3857)
@@ -171,7 +172,7 @@ plt.show()
 ```{python}
 #| echo: false
 df["income_quintile"] = pd.qcut(
-    df['median_hh_income'].rank(method="first"),   # rank first to handle ties
+    df['x_median_hh_income'].rank(method="first"),   # rank first to handle ties
     5,
     labels=["Q1 (Lowest)", "Q2", "Q3", "Q4", "Q5 (Highest)"],
 )

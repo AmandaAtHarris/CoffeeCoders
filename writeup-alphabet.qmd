@@ -169,9 +169,12 @@ plt.show()
 ```
 
 ```{python}
+df.columns
+```
+```{python}
 #| echo: false
 df["income_quintile"] = pd.qcut(
-    df['median_hh_income'].rank(method="first"),   # rank first to handle ties
+    df['x_median_hh_income'].rank(method="first"),   # rank first to handle ties
     5,
     labels=["Q1 (Lowest)", "Q2", "Q3", "Q4", "Q5 (Highest)"],
 )
@@ -262,7 +265,7 @@ We can see that math scores have a positive strong relationship with the number 
 #| dpi: 300
 plot_scatter_with_ols(
     df=df,
-    x_col="total_n_hh",
+    x_col="x_total_n_hh",
     y_col="y_math_prof",
     x_label="Total Households (Tract)",
     y_label="Post-Test Math Score",
