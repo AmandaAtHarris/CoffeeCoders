@@ -15,6 +15,6 @@ All of our data is publicly available.
 
 The data processing flow is as follows: our pre processing file is called preprocessing.py , this cleaned all of our data which is in the FINAL_data folder. Our machine learning pipeline is called ml_pipeline.py, this runs our elastic net. Finally our write up is called final_project.qmd
 
-This is the link to our dashboard*: https://coffinatededu.streamlit.app/
+This is the link to our dashboard*: https://finalcoffee.streamlit.app/
 
 *please note that the dashboard must be "woken up" before running. This is a Streamlit feature, not a bug.
