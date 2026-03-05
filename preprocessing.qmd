@@ -180,6 +180,38 @@ merged_clean = merged.drop(columns=['TRACTID', 'TRACTLABEL', 'index_left',
                                     'NMCSA', 'NECTA', 'NMNECTA', 'CD', 'SLDL', 'SLDU', 
                                     'SCHOOLYEAR', 'State','County'])
 
-merged_clean.to_csv('final_merged.csv')
+
+```
+
+
+```{python}
+for col in ['School Name', 'district', 'county', 'grades_served']:
+    if col in merged_clean.columns:
+        merged_clean[col] = merged_clean[col].str.strip()
+
+merged_clean['school_type'] = merged_clean['school_type'].str.strip().str.upper()
+
+# Normalize grades_served: "9 10 11 12" -> "9 - 12", "K 1 2 ... 12" -> "K - 12"
+def normalize_grades(val):
+    if pd.isna(val):
+        return val
+    parts = val.split()
+    if '-' in parts:
+        return f'Grade {parts[0]} - {parts[-1]}'
+    if len(parts) >= 2:
+        return f'Grade {parts[0]} - {parts[-1]}'
+    return f'Grade {val}'
+
+merged_clean['grades_served'] = merged_clean['grades_served'].apply(normalize_grades)
+
+# Add x_ prefix to feature columns that don't already have x_/y_ prefix
+metadata_cols = {'School Name', 'county', 'district', 'grades_served', 'school_type', 'year'}
+rename_map = {
+    c: f'x_{c}' for c in merged_clean.columns
+    if not c.startswith('x_') and not c.startswith('y_') and c not in metadata_cols
+}
+merged_clean = merged_clean.rename(columns=rename_map)
+
+merged_clean.to_csv('final_merged.csv', index=False)
 
 ```
